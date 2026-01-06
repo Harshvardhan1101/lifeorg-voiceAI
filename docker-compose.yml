@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  voice-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: voice-pipeline-agent
+    container_name: voice-pipeline-agent
+    restart: unless-stopped
+    env_file:
+      - .env.local
+    environment:
+      # Enable health server for container orchestration
+      - ENABLE_HEALTH_SERVER=true
+      - HEALTH_PORT=8080
+    # Port 8080 is for health checks only (Kubernetes liveness/readiness probes)
+    # The agent itself connects OUTBOUND to LiveKit server - no inbound traffic needed
+    ports:
+      - "8080:8080"  # Health check endpoint only
+    volumes:
+      - model_cache:/app/.cache
+    networks:
+      - voice-agent-network
+    # Health check using HTTP endpoint
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+networks:
+  voice-agent-network:
+    driver: bridge
+
+volumes:
+  model_cache:
+    driver: local
