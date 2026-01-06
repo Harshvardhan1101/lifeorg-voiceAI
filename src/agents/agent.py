@@ -14,7 +14,7 @@ from livekit.agents import (
     llm,
     metrics,
 )
-from livekit.plugins import silero
+from livekit.plugins import silero, openai, deepgram, groq
 
 from ..config.agent_configs import AGENT_CONFIGS
 from ..utils.environment import get_env_var
@@ -100,27 +100,42 @@ class VoicePipelineAgentRunner:
             tts_config = agent_config["models"]["tts"]
             stt_config = agent_config["models"]["stt"]
             
-            # Build model strings (provider/model format)
-            llm_str = f"{llm_config['provider']}/{llm_config['model']}"
-            stt_str = f"{stt_config['provider']}/{stt_config['model']}"
+            # Create LLM instance based on provider
+            if llm_config["provider"] == "groq":
+                llm_instance = groq.LLM(
+                    model=llm_config["model"],
+                    temperature=llm_config.get("temperature", 0.7),
+                )
+            elif llm_config["provider"] == "openai":
+                llm_instance = openai.LLM(
+                    model=llm_config["model"],
+                    temperature=llm_config.get("temperature", 0.7),
+                )
+            else:
+                # Fallback to string format
+                llm_instance = f"{llm_config['provider']}/{llm_config['model']}"
+            
+            # Create STT instance
+            if stt_config["provider"] == "deepgram":
+                stt_instance = deepgram.STT(model=stt_config["model"])
+            else:
+                stt_instance = f"{stt_config['provider']}/{stt_config['model']}"
             
             # For TTS, handle OpenAI special case with instructions
             if tts_config["provider"] == "openai":
-                from livekit.plugins import openai
                 tts_instance = openai.TTS(
                     model=tts_config["model"],
                     voice=tts_config["voice"],
                     instructions=tts_config.get("instructions"),
                 )
             else:
-                tts_str = f"{tts_config['provider']}/{tts_config['model']}:{tts_config['voice']}"
-                tts_instance = tts_str
+                tts_instance = f"{tts_config['provider']}/{tts_config['model']}:{tts_config['voice']}"
             
             # Create agent session
             session = AgentSession(
                 vad=self.vad or silero.VAD.load(),
-                stt=stt_str,
-                llm=llm_str,
+                stt=stt_instance,
+                llm=llm_instance,
                 tts=tts_instance,
                 allow_interruptions=True,
                 min_interruption_duration=0.5,
