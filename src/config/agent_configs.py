@@ -48,7 +48,7 @@ AGENT_CONFIGS = {
         "models": {
             "llm": {
                 "provider": "groq",
-                "model": "llama-4-maverick-17b-128e-instruct",
+                "model": "llama-3.3-70b-versatile",
                 "temperature": 0.7
             },
             "tts": {
@@ -119,7 +119,7 @@ AGENT_CONFIGS = {
         "models": {
             "llm": {
                 "provider": "groq",
-                "model": "llama-4-maverick-17b-128e-instruct",
+                "model": "llama-3.3-70b-versatile",
                 "temperature": 0.8
             },
             "tts": {
@@ -190,7 +190,7 @@ AGENT_CONFIGS = {
         "models": {
             "llm": {
                 "provider": "groq",
-                "model": "llama-4-maverick-17b-128e-instruct",
+                "model": "llama-3.3-70b-versatile",
                 "temperature": 0.8
             },
             "tts": {
@@ -261,7 +261,7 @@ AGENT_CONFIGS = {
         "models": {
             "llm": {
                 "provider": "groq",
-                "model": "llama-4-maverick-17b-128e-instruct",
+                "model": "llama-3.3-70b-versatile",
                 "temperature": 0.8
             },
             "tts": {
@@ -332,7 +332,7 @@ AGENT_CONFIGS = {
         "models": {
             "llm": {
                 "provider": "groq",
-                "model": "llama-4-maverick-17b-128e-instruct",
+                "model": "llama-3.3-70b-versatile",
                 "temperature": 0.8
             },
             "tts": {
@@ -403,7 +403,7 @@ AGENT_CONFIGS = {
         "models": {
             "llm": {
                 "provider": "groq",
-                "model": "llama-4-maverick-17b-128e-instruct",
+                "model": "llama-3.3-70b-versatile",
                 "temperature": 0.8
             },
             "tts": {
