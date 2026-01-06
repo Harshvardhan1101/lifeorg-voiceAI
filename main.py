@@ -78,7 +78,7 @@ if __name__ == "__main__":
             WorkerOptions(
                 prewarm_fnc=prewarm,
                 entrypoint_fnc=entrypoint,
-              #   initialize_process_timeout=60.0,  # Increase timeout for model loading
+                initialize_process_timeout=60.0,  # Increase timeout for model loading
             )
         )
     except Exception as e:
