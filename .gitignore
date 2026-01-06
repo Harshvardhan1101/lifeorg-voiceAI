@@ -1,0 +1,28 @@
+.venv/
+venv/
+.DS_Store
+.env.local.example
+.env.*
+.env
+.env.local
+.env.mate
+.env.production
+.env.development
+.env.test
+.env.health
+.env.character
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+# Ignore virtual environment directories
+.venv/
+venv/
+# Ignore IDE specific files
+.idea/
+.vscode/
+# Ignore logs
+*.log
