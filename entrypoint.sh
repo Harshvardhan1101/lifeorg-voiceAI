@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# Trap signals for graceful shutdown
+trap 'echo "Received SIGTERM, shutting down gracefully..."; exit 0' SIGTERM
+trap 'echo "Received SIGINT, shutting down gracefully..."; exit 0' SIGINT
+
 echo "Initializing voice pipeline agent..."
 
 # Download required model files first (including Silero VAD)
